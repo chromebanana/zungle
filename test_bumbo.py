@@ -137,7 +137,7 @@ def test_custom_exception_handler(api, client):
 
 
 def test_404_is_returned_for_nonexistent_static_file(client):
-    assert client.get(f"http://testserver/main.css)").status_code == 404
+    assert client.get(f"http://testserver/static/main.css)").status_code == 404
 
 
 def test_assets_are_served(tmpdir_factory):
@@ -146,7 +146,7 @@ def test_assets_are_served(tmpdir_factory):
     api = API(static_dir=str(static_dir))
     client = api.test_session()
 
-    response = client.get(f"http://testserver/{FILE_DIR}/{FILE_NAME}")
+    response = client.get(f"http://testserver/static/{FILE_DIR}/{FILE_NAME}")
 
     assert response.status_code == 200
     assert response.text == FILE_CONTENTS
@@ -178,3 +178,14 @@ def test_middleware_methods_are_called(api, client):
 
     assert process_request_called is True
     assert process_response_called is True
+
+
+def test_allowed_methods_for_function_based_handlers(api, client):
+    @api.route("/home", allowed_methods=["post"])
+    def home(req, resp):
+        resp.text = "Hello"
+
+    with pytest.raises(AttributeError):
+        client.get("http://testserver/home")
+
+    assert client.post("http://testserver/home").text == "Hello"
