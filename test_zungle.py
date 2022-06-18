@@ -1,6 +1,6 @@
 import pytest
-from middleware import Middleware
-from api import API
+from zungle.middleware import Middleware
+from zungle.api import API
 
 
 FILE_DIR = "css"

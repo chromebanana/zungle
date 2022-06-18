@@ -1,5 +1,5 @@
-from api import API
-from middleware import Middleware
+from zungle.api import API
+from zungle.middleware import Middleware
 
 app = API()
 

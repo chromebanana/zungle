@@ -1,6 +1,6 @@
 import pytest
 
-from api import API
+from zungle.api import API
 
 
 @pytest.fixture

@@ -1,4 +1,9 @@
 .coverage
 .coveragerc
-__pycache__/*
+/__pycache__/*
 venv/*
+build/*
+dist/*
+.eggs/*
+zungle.egg-info/*
+.pytest_cache/*
